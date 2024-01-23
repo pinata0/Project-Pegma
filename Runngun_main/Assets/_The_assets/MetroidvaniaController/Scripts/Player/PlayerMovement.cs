@@ -31,12 +31,12 @@ public class PlayerMovement : MonoBehaviour
 
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			jump = true;
 		}
 
-		if (Input.GetKeyDown(KeyCode.Mouse0))
+		if (Input.GetKeyDown(KeyCode.E))
 		{
 			_screenShakeInstance = CameraShakerHandler.Shake(_screenShakeData);
             //_dashSound.Play();

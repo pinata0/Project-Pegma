@@ -15,18 +15,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Gets the movemnet from the player (A and D keys)
         horizontalMove = Input.GetAxisRaw("Horizontal");
+
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-        // If this button is pressed then jump is true
         if (Input.GetButtonDown("Jump"))
         {
             jump = true;
             animator.SetBool("isJumping", true);
         }
-        else{
-            animator.SetBool("isJumping", false);  
+        else
+        {
+            animator.SetBool("isJumping", false);
         }
     }
 

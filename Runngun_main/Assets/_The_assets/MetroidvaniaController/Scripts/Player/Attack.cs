@@ -30,7 +30,7 @@ public class Attack : MonoBehaviour
 
     private void Update()
     {
-		if (Input.GetKeyDown(KeyCode.Mouse1) && canAttack)
+		if (Input.GetKeyDown(KeyCode.F) && canAttack)
 		{
 			canAttack = false;
 			animator.SetBool("IsAttacking", true);
