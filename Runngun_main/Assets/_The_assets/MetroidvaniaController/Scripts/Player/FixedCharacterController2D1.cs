@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class CharacterController2D : MonoBehaviour
+public class FixedCharacterController2D : MonoBehaviour
 {
 	[Header("Core Properties")]
 	[SerializeField] private bool m_AirControl = false;
@@ -54,6 +54,29 @@ public class CharacterController2D : MonoBehaviour
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
+
+	private const float RAY_DISTANCE = 2f;
+	private RaycastHit slopeHit;
+	private int groundLayer = 1 << LayerMask.NameToLayer("Ground");
+	[SerializeField] private int maxSlopeAngle;
+
+	public bool IsOnSlope()
+	{
+		Ray ray = new Ray(transform.position, Vector2.down);
+		if(Physics.Raycast(ray, out slopeHit, RAY_DISTANCE, groundLayer))
+		{
+			var angle = Vector2.Angle(Vector2.up, slopeHit.normal);
+			return angle != 0f && angle < maxSlopeAngle;
+		}
+		return false;
+	}
+
+	protected Vector2 AdjustDirectionToSlope(Vector2 direction)
+	{
+		Vector3 direction3D = new Vector3(direction.x, direction.y, 0f);
+		Vector3 adjustedDirection3D = Vector3.ProjectOnPlane(direction3D, slopeHit.normal).normalized;
+		return new Vector2(adjustedDirection3D.x, adjustedDirection3D.y);
+	}
 
 	private void Awake()
 	{

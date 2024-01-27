@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Camera Properties")]
 	[SerializeField] private ShakeData _screenShakeData = null;
-	private ShakerInstance             _screenShakeInstance;
+	private ShakerInstance _screenShakeInstance;
 
 	//[Header("Audio Properties")]
 	//[SerializeField] private AudioSource _dashSound;
@@ -25,22 +25,24 @@ public class PlayerMovement : MonoBehaviour
 
 	//bool dashAxis = false;
 
-	void Update () {
+	// Update is called once per frame
+	void Update()
+	{
 
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
 		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.W))
 		{
 			jump = true;
 		}
 
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			_screenShakeInstance = CameraShakerHandler.Shake(_screenShakeData);
-            //_dashSound.Play();
-            _dashParticleSystem.Play();
+			//_dashSound.Play();
+			_dashParticleSystem.Play();
 			dash = true;
 		}
 
@@ -70,9 +72,9 @@ public class PlayerMovement : MonoBehaviour
 		animator.SetBool("IsJumping", false);
 	}
 
-	void FixedUpdate ()
+	void FixedUpdate()
 	{
-		// 캐릭터 움직이기
+		// Move our character
 		controller.Move(horizontalMove * Time.fixedDeltaTime, jump, dash);
 		jump = false;
 		dash = false;
